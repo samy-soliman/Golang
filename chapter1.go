@@ -54,8 +54,19 @@ as opposed to being a library that's imported by other programs.
 */
 
 /*
+Go enforces strong and static typing, meaning variables can only have a single type.
+A string variable like "hello world" can not be changed to an int
 
- */
+Contrast this with most interpreted languages, where the variable types are dynamic. Dynamic typing can lead to subtle bugs that are hard to detect.
+With interpreted languages, the code must be run to catch syntax and type errors. (sometimes in production if you are unlucky 😨
+*/
+
+/*
+Go programs are fairly lightweight. Each program includes a small amount of "extra" code that's included in the executable binary.
+This extra code is called the Go Runtime. One of the purposes of the Go runtime is to cleanup unused memory at runtime.
+
+In other words, the Go compiler includes a small amount of extra logic in every Go program to make it easier for developers to write code that's memory efficient.
+*/
 
 package main
 
