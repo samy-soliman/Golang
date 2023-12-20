@@ -181,10 +181,117 @@ const fullName = firstName + " " + lastName
 
 That said, you cannot declare a constant that can only be computed at run-time.
 */
+
+/*
+fmt.Printf - Prints a formatted string to standard out.
+fmt.Sprintf() - Returns the formatted string
+*/
+
+/*
+Interpolate the default representation
+
+// The %v variant prints the Go syntax representation of a value.
+s := fmt.Sprintf("I am %v years old", 10)
+// I am 10 years old
+
+// Interpolate a string
+s := fmt.Sprintf("I am %s years old", "way too many")
+// I am way too many years old
+
+// Interpolate an integer in decimal form
+s := fmt.Sprintf("I am %d years old", 10)
+// I am 10 years old
+
+// Interpolate a decimal
+s := fmt.Sprintf("I am %f years old", 10.523)
+// I am 10.523000 years old
+// The ".2" rounds the number to 2 decimal places
+s := fmt.Sprintf("I am %.2f years old", 10.523)
+// I am 10.52 years old
+
+
+*/
+
+/*
+Conditionals
+
+if statements in Go don't use parentheses around the condition:
+else if and else are supported as you would expect:
+
+if height > 6 {
+    fmt.Println("You are super tall!")
+} else if height > 4 {
+    fmt.Println("You are tall enough!")
+} else {
+    fmt.Println("You are not tall enough!")
+}
+
+*/
+
+/*
+if conditional can have an "initial" statement. The variable(s) created in the initial statement are only defined within the scope of the if body.
+
+if INITIAL_STATEMENT; CONDITION {
+}
+
+Why would I use this?
+
+This is just some syntactic sugar that Go offers to shorten up code in some cases. For example, instead of writing:
+
+length := getLength(email)
+
+	if length < 1 {
+	    fmt.Println("Email is invalid")
+	}
+
+We can do:
+
+	if length := getLength(email); length < 1 {
+	    fmt.Println("Email is invalid")
+	}
+*/
+
+/*
+Functions
+
+Functions in Go can take zero or more arguments.
+
+To make Go code easier to read, the variable type comes after the variable name.
+
+For example, the following function:
+
+	func sub(x int, y int) int {
+	  return x-y
+	}
+
+Accepts two integer parameters and returns another integer.
+Here, func sub(x int, y int) int is known as the "function signature".
+*/
+
+/*
+When multiple arguments are of the same type, and are next to each other in the function signature, the type only needs to be declared after the last argument.
+
+	func addToDatabase(hp, damage int, name string) {
+	  // ?
+	}
+*/
+
+/*
+example of go functions systax
+f func(func(int,int) int, int) int
+A function named 'f' that takes a function and an int as arguments and returns an int
+*/
+
+/*
+ */
 package main
 
 import "fmt"
 
 func main() {
-	fmt.Println("Hello, world!")
+	const name = "Saul Goodman"
+	const openRate = 30.5
+	msg := fmt.Sprintf("Hi %s , your open rate is %.1f percent", name, openRate)
+
+	fmt.Print(msg)
 }
