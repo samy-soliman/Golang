@@ -1,5 +1,7 @@
 // The Error Interface
 
+// When you return a non-nil error in Go, it's conventional to return the "zero" values of all other return values.
+
 /*
 Go programs express errors with error values. An Error is any type that implements the simple built-in error interface:
 
@@ -25,6 +27,15 @@ if err != nil {
 A nil error denotes success; a non-nil error denotes failure.
 */
 
+/*
+The Go standard library provides an "errors" package that makes it easy to deal with errors.
+
+Read the godoc for the errors.New() function, but here's a simple example:
+
+var err error = errors.New("something went wrong")
+*/
+
+//----------------------------------------------------------------------------
 // code example 1
 /*
 package main
@@ -52,7 +63,7 @@ func sendSMS(message string) (float64, error) {
 	const maxTextLen = 25
 	const costPerChar = .0002
 	if len(message) > maxTextLen {
-		return 0.0, fmt.Errorf("can't send texts over %v characters", maxTextLen)
+		return 0.0, fmt.Errorf("can't send texts over %v characters", maxTextLen) // ***
 	}
 	return costPerChar * float64(len(message)), nil
 }
@@ -174,3 +185,38 @@ func main() {
 	fmt.Printf("getCarResult2: %v \n", getCarResult2)
 }
 */
+
+// code example 4
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func divide(x, y float64) (float64, error) {
+	if y == 0 {
+		return 0, errors.New("no dividing by 0")
+	}
+	return x / y, nil
+}
+
+// don't edit below this line
+
+func test(x, y float64) {
+	defer fmt.Println("====================================")
+	fmt.Printf("Dividing %.2f by %.2f ...\n", x, y)
+	quotient, err := divide(x, y)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Printf("Quotient: %.2f\n", quotient)
+}
+
+func main() {
+	test(10, 0)
+	test(10, 2)
+	test(15, 30)
+	test(6, 3)
+}
