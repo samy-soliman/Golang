@@ -249,6 +249,8 @@ Which inherits the required methods from car and adds one additional required me
     Interfaces define function signatures, but not underlying behavior. Making an interface often won’t DRY up your code in regards to struct methods. For example, if five types satisfy the fmt.Stringer interface, they all need their own version of the String() function.
 */
 
+/*
+
 package main
 
 import (
@@ -306,3 +308,4 @@ func main() {
 		birthdayTime:  time.Date(1934, 05, 01, 0, 0, 0, 0, time.UTC),
 	})
 }
+*/

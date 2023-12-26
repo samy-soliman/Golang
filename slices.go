@@ -91,3 +91,119 @@ func Append(slice, data []byte) []byte {
     return slice
 }
 */
+
+/*
+package main
+
+import "fmt"
+
+const (
+	retry1 = "click here to sign up"
+	retry2 = "pretty please click here"
+	retry3 = "we beg you to sign up"
+)
+
+func getMessageWithRetries() [3]string {
+	return [3]string{
+		retry1,
+		retry2,
+		retry3,
+	}
+}
+
+func send(name string, doneAt int) {
+	fmt.Printf("sending to %v...", name)
+	fmt.Println()
+
+	messages := getMessageWithRetries()
+	for i := 0; i < len(messages); i++ {
+		msg := messages[i]
+		fmt.Printf(`sending: "%v"`, msg)
+		fmt.Println()
+		if i == doneAt {
+			fmt.Println("they responded!")
+			break
+		}
+		if i == len(messages)-1 {
+			fmt.Println("complete failure")
+		}
+	}
+}
+
+func main() {
+	send("Bob", 0)
+	send("Alice", 1)
+	send("Mangalam", 2)
+	send("Ozgur", 3)
+}
+*/
+
+/*
+package main
+
+import "fmt"
+
+func sum(nums []float64) float64 {
+	sum := 0.0
+	for i := 0; i < len(nums); i++ {
+		num := nums[i]
+		sum += num
+	}
+	return sum
+}
+
+func test(nums []float64) {
+	total := sum(nums)
+	fmt.Printf("Summing %v costs...\n", len(nums))
+	fmt.Printf("Bill for the month: %.2f\n", total)
+	fmt.Println("===== END REPORT =====")
+}
+
+func main() {
+	test([]float64{1.0, 2.0, 3.0})
+	test([]float64{1.0, 2.0, 3.0, 4.0, 5.0})
+	test([]float64{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0})
+	test([]float64{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0})
+}
+*/
+
+/*
+Many functions, especially those in the standard library, can take an arbitrary number of final arguments. This is accomplished by using the "..." syntax in the function signature.
+
+A variadic function receives the variadic arguments as a slice.
+
+func concat(strs ...string) string {
+    final := ""
+    // strs is just a slice of strings
+    for _, str := range strs {
+        final += str
+    }
+    return final
+}
+
+func main() {
+    final := concat("Hello ", "there ", "friend!")
+    fmt.Println(final)
+    // Output: Hello there friend!
+}
+
+The familiar fmt.Println() and fmt.Sprintf() are variadic! fmt.Println() prints each element with space delimiters and a newline at the end.
+
+func Println(a ...interface{}) (n int, err error)
+
+Spread operator
+
+The spread operator allows us to pass a slice into a variadic function. The spread operator consists of three dots following the slice in the function call.
+
+func printStrings(strings ...string) {
+	for i := 0; i < len(strings); i++ {
+		fmt.Println(strings[i])
+	}
+}
+
+func main() {
+    names := []string{"bob", "sue", "alice"}
+    printStrings(names...)
+}
+*/
+

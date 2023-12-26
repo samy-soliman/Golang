@@ -187,6 +187,7 @@ func main() {
 */
 
 // code example 4
+/*
 package main
 
 import (
@@ -220,3 +221,4 @@ func main() {
 	test(15, 30)
 	test(6, 3)
 }
+*/
