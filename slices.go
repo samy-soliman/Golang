@@ -207,3 +207,205 @@ func main() {
 }
 */
 
+/*
+The built-in append function is used to dynamically add elements to a slice:
+
+func append(slice []Type, elems ...Type) []Type
+
+If the underlying array is not large enough, append() will create a new underlying array and point the slice to it.
+
+Notice that append() is variadic, the following are all valid:
+
+slice = append(slice, oneThing)
+slice = append(slice, firstThing, secondThing)
+slice = append(slice, anotherSlice...)
+*/
+
+/*
+
+package main
+
+import "fmt"
+
+type cost struct {
+	day   int
+	value float64
+}
+
+func getCostsByDay(costs []cost) []float64 {
+	costsByDay := []float64{}
+	for i := 0; i < len(costs); i++ {
+		cost := costs[i]
+		for cost.day >= len(costsByDay) {
+			costsByDay = append(costsByDay, 0.0)
+		}
+		costsByDay[cost.day] += cost.value
+	}
+	return costsByDay
+}
+
+func test(costs []cost) {
+	fmt.Printf("Creating daily buckets for %v costs...\n", len(costs))
+	costsByDay := getCostsByDay(costs)
+	fmt.Println("Costs by day:")
+	for i := 0; i < len(costsByDay); i++ {
+		fmt.Printf(" - Day %v: %.2f\n", i, costsByDay[i])
+	}
+	fmt.Println("===== END REPORT =====")
+}
+
+func main() {
+	test([]cost{
+		{0, 1.0},
+		{1, 2.0},
+		{1, 3.1},
+		{2, 2.5},
+		{3, 3.6},
+		{3, 2.7},
+		{4, 3.34},
+	})
+	test([]cost{
+		{0, 1.0},
+		{10, 2.0},
+		{3, 3.1},
+		{2, 2.5},
+		{1, 3.6},
+		{2, 2.7},
+		{4, 56.34},
+		{13, 2.34},
+		{28, 1.34},
+		{25, 2.34},
+		{30, 4.34},
+	})
+}
+*/
+
+/*
+Slice of slices
+
+Slices can hold other slices, effectively creating a matrix, or a 2D slice.
+
+rows := [][]int{}
+
+you can make a more dimentional slice
+*/
+
+/*
+package main
+
+import "fmt"
+
+func createMatrix(rows, cols int) [][]int {
+	matrix := [][]int{}
+	for i := 0; i < rows; i++ {
+		row := []int{}
+		for j := 0; j < cols; j++ {
+			row = append(row, i*j)
+		}
+		matrix = append(matrix, row)
+	}
+	return matrix
+}
+
+func test(rows, cols int) {
+	fmt.Printf("Creating %v x %v matrix...\n", rows, cols)
+	matrix := createMatrix(rows, cols)
+	for i := 0; i < len(matrix); i++ {
+		fmt.Println(matrix[i])
+	}
+	fmt.Println("===== END REPORT =====")
+}
+
+func main() {
+	test(3, 3)
+	test(5, 5)
+	test(10, 10)
+	test(15, 15)
+}
+*/
+
+/*
+The append() function changes the underlying array of its parameter AND returns a new slice. This means that using append() on anything other than itself is usually a BAD idea.
+
+// dont do this!
+someSlice = append(otherSlice, element)
+
+Take a look at these head-scratchers:
+Example 1: Works as expected
+
+a := make([]int, 3)
+fmt.Println("len of a:", len(a))
+// len of a: 3
+fmt.Println("cap of a:", cap(a))
+// cap of a: 3
+fmt.Println("appending 4 to b from a")
+// appending 4 to b from a
+b := append(a, 4)
+fmt.Println("b:", b)
+// b: [0 0 0 4]
+fmt.Println("addr of b:", &b[0])
+// addr of b: 0x44a0c0
+fmt.Println("appending 5 to c from a")
+// appending 5 to c from a
+c := append(a, 5)
+fmt.Println("addr of c:", &c[0])
+// addr of c: 0x44a180
+fmt.Println("a:", a)
+// a: [0 0 0]
+fmt.Println("b:", b)
+// b: [0 0 0 4]
+fmt.Println("c:", c)
+// c: [0 0 0 5]
+
+With slices a, b, and c, 4 and 5 seem to be appended as we would expect. We can even check the memory addresses and confirm that b and c point to different underlying arrays.
+Example 2: Something fishy
+
+i := make([]int, 3, 8)
+fmt.Println("len of i:", len(i))
+// len of i: 3
+fmt.Println("cap of i:", cap(i))
+// cap of i: 8
+fmt.Println("appending 4 to j from i")
+// appending 4 to j from i
+j := append(i, 4)
+fmt.Println("j:", j)
+// j: [0 0 0 4]
+fmt.Println("addr of j:", &j[0])
+// addr of j: 0x454000
+fmt.Println("appending 5 to g from i")
+// appending 5 to g from i
+g := append(i, 5)
+fmt.Println("addr of g:", &g[0])
+// addr of g: 0x454000
+fmt.Println("i:", i)
+// i: [0 0 0]
+fmt.Println("j:", j)
+// j: [0 0 0 5]
+fmt.Println("g:", g)
+// g: [0 0 0 5]
+
+In this example, however, when 5 is appended to g it overwrites j's fourth index because j and g point to the same underlying array. The append() function only creates a new array when there isn't any capacity left. We created i with a length of 3 and a capacity of 8, which means we can append 5 items before a new array is automatically allocated.
+
+Again, to avoid bugs like this, you should always use the append function on the same slice the result is assigned to:
+
+mySlice := []int{1, 2, 3}
+mySlice = append(mySlice, 4)
+*/
+
+/*
+Go provides syntactic sugar to iterate easily over elements of a slice:
+
+for INDEX, ELEMENT := range SLICE {
+}
+
+For example:
+
+fruits := []string{"apple", "banana", "grape"}
+for i, fruit := range fruits {
+    fmt.Println(i, fruit)
+}
+// 0 apple
+// 1 banana
+// 2 grape
+
+*/
