@@ -1,4 +1,9 @@
 /*
+Notice that we need to capitalize the first letter of any thing we want to use in the package
+If we don't then we won't be able to access it  outside of the package
+*/
+
+/*
 Packages
 
 Every Go program is made up of packages.
