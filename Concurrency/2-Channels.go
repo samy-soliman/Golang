@@ -1,4 +1,9 @@
 /*
+while channels and goroutines are separate concepts in Go, they are designed to work together and are often tied together in practice.
+It’s this combination of goroutines and channels that allows Go to handle concurrency so effectively.
+*/
+
+/*
 Channels are a typed, thread-safe queue.
 Channels allow different goroutines to communicate with each other.
 
@@ -122,5 +127,59 @@ func main() {
 			date: time.Date(2022, 0, 0, 0, 0, 0, 0, time.UTC),
 		},
 	})
+}
+*/
+
+/*
+Empty structs are often used as tokens in Go programs.
+In this context, a token is a unary value. In other words, we don't care what is passed through the channel. We care when and if it is passed.
+
+We can block and wait until something is sent on a channel using the following syntax
+<-ch
+
+This will block until it pops a single item off the channel, then continue, discarding the item.
+*/
+
+/*
+
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func waitForDbs(numDBs int, dbChan chan struct{}) {
+	for i := 0; i < numDBs; i++ {
+		<-dbChan
+	}
+}
+
+// don't touch below this line
+
+func test(numDBs int) {
+	dbChan := getDatabasesChannel(numDBs)
+	fmt.Printf("Waiting for %v databases...\n", numDBs)
+	waitForDbs(numDBs, dbChan)
+	time.Sleep(time.Millisecond * 10) // ensure the last print statement happens
+	fmt.Println("All databases are online!")
+	fmt.Println("=====================================")
+}
+
+func main() {
+	test(3)
+	test(4)
+	test(5)
+}
+
+func getDatabasesChannel(numDBs int) chan struct{} {
+	ch := make(chan struct{})
+	go func() {
+		for i := 0; i < numDBs; i++ {
+			ch <- struct{}{}
+			fmt.Printf("Database %v is online\n", i+1)
+		}
+	}()
+	return ch
 }
 */
