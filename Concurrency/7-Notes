@@ -1,0 +1,27 @@
+/*
+Channels Review
+
+Here are a few extra things you should understand about channels from Dave Cheney's awesome article.
+
+1- A send to a nil channel blocks forever
+
+var c chan string // c is nil
+c <- "let's get started" // blocks
+
+2- A receive from a nil channel blocks forever
+
+var c chan string // c is nil
+fmt.Println(<-c) // blocks
+
+3- A send to a closed channel panics
+
+var c = make(chan int, 100)
+close(c)
+c <- 1 // panic: send on closed channel
+
+4- A receive from a closed channel returns the zero value immediately
+
+var c = make(chan int, 100)
+close(c)
+fmt.Println(<-c) // 0
+*/
